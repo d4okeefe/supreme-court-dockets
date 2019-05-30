@@ -1,0 +1,60 @@
+﻿@page
+@model SupremeCourtDocketApp.Pages.DocketsSimpleModel
+
+@{
+    ViewData["Title"] = "DocketsSimple";
+}
+
+<h1>DocketsSimple</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocketSimple[0].DocketNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocketSimple[0].WebAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocketSimple[0].WebPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocketSimple[0].DateRetrieved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocketSimple[0].CaseTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SupremeCourtDocketSimple) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocketNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebPage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRetrieved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseTitle)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

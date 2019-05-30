@@ -1,0 +1,110 @@
+﻿@page
+@model SupremeCourtDocketApp.Pages.DocketsModel
+
+@{
+    ViewData["Title"] = "Dockets";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".proceedingsrows").hide();
+        $(".showhideproceedingstoggle").click(function () {
+            $(".proceedingsrows").toggle();
+        });
+        $(".contactsrows").hide();
+        $(".showhidecontactstoggle").click(function () {
+            $(".contactsrows").toggle();
+        });
+        $("#datasearch").hide();
+        $(".showhidedatasearch").click(function () {
+            $("#datasearch").toggle();
+        });
+
+    });
+</script>
+
+
+
+<h1>Dockets</h1>
+<p>Total dockets: collected: @Model.TotalCount</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].DocketNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].CaseTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].DateDocketed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].DateOfDecision)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].DateOfRehearingDenied)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupremeCourtDocket[0].Proceedings)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SupremeCourtDocket) {
+        <tr>
+            <td>
+                <a href=@item.WebAddress target="_blank">@item.DocketNumber</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDocketed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfDecision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfRehearingDenied)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <button class="showhideproceedingstoggle">Show Proceedings</button>
+                <button class="showhidecontactstoggle">Show Contacts</button>
+            </td>
+        </tr>
+    @if (null != item.Proceedings)
+    {
+        @foreach (var proc in item.Proceedings)
+        {
+            <tr class="proceedingsrows" >
+                <td>
+                    @Html.DisplayFor(modelItem => proc.ProceedingDate)
+                </td>
+                <td colspan="3">
+                    @Html.DisplayFor(modelItem => proc.ProceedingDescription)
+                </td>
+            </tr>
+        }
+    }
+    @if (null != item.Contacts)
+    {
+        @foreach (var cont in item.Contacts)
+        {
+            <tr class="contactsrows">
+                <td>
+                    @Html.DisplayFor(modelItem => cont.AttorneyFullName)
+                </td>
+                <td colspan="3">
+                    @Html.DisplayFor(modelItem => cont.PartyFooter)
+                </td>
+            </tr>
+        }
+    }        
+}
+    </tbody>
+</table>
